@@ -1,0 +1,6 @@
+@ProjetoJWT.WebAPI_HostAddress = http://localhost:5160
+
+GET {{ProjetoJWT.WebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
