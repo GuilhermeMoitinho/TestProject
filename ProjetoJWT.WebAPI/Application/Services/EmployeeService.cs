@@ -30,8 +30,8 @@ namespace ProjetoJWT.WebAPI.Application.Services
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public Task<IEnumerable<Employee>> GetAll()
-            => _repository.GetAll();
+        public Task<IEnumerable<Employee>> GetAll(int PaginaNumeros, int QuantidadeDeNumeros)
+            => _repository.GetAll(PaginaNumeros, QuantidadeDeNumeros);
 
         public Task<Employee> GetId(Guid id)
             => _repository.GetId(id);   

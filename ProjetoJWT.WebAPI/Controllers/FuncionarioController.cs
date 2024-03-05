@@ -17,8 +17,8 @@ namespace ProjetoJWT.WebAPI.Controllers
 
         [Authorize(Roles = "Manager")]
         [HttpGet]
-        public async Task<IActionResult> GetAllAsync()
-            => Ok(await _employeeService.GetAll());
+        public async Task<IActionResult> GetAllAsync(int PaginaNumeros, int QuantidadeDeNumeros)
+            => Ok(await _employeeService.GetAll(PaginaNumeros, QuantidadeDeNumeros));
 
         [ActionName("GetByIdAsync")]
         [HttpGet("{id}")]

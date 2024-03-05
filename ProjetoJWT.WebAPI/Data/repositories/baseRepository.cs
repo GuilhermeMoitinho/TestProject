@@ -24,10 +24,12 @@ namespace ProjetoJWT.WebAPI.Data.repositories
            DB.Remove(generic);
         }
 
-        public virtual async Task<IEnumerable<T>> GetAll()
+        public virtual async Task<IEnumerable<T>> GetAll(int PaginaNumeros, int QuantidadeDeNumeros)
         {
             return await DB
                 .AsNoTracking()
+                .Skip(PaginaNumeros * QuantidadeDeNumeros)
+                .Take(QuantidadeDeNumeros)
                 .ToListAsync();
         }
 
