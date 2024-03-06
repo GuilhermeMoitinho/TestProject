@@ -1,12 +1,5 @@
-
-using Microsoft.EntityFrameworkCore;
-using ProjetoJWT.WebAPI.Application.interfaces;
-using ProjetoJWT.WebAPI.Application.Services;
-using ProjetoJWT.WebAPI.Data.db;
-using ProjetoJWT.WebAPI.Data.repositories;
-using ProjetoJWT.WebAPI.Domain.Entities;
-using ProjetoJWT.WebAPI.Domain.interfaces;
 using ProjetoJWT.WebAPI.Extensions;
+using ProjetoJWT.WebAPI.Middlewares;
 
 namespace ProjetoJWT.WebAPI
 {
@@ -40,6 +33,8 @@ namespace ProjetoJWT.WebAPI
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+            app.UseMiddleware(typeof(ErrorMiddleware));
 
             app.MapControllers();
 

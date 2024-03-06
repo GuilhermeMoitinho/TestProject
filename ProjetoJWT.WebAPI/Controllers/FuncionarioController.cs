@@ -66,5 +66,12 @@ namespace ProjetoJWT.WebAPI.Controllers
             return NoContent();
         }
 
+        [AllowAnonymous]
+        [HttpPut("id")]
+        public async Task<IActionResult> PutFuncionario()
+        {
+            throw new Exception("Erro");
+        }
+
     }
 }

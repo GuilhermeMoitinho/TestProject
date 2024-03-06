@@ -1,4 +1,4 @@
-﻿using ProjetoJWT.WebAPI.Application.DTOs;
+﻿using ProjetoJWT.WebAPI.Application.DTOs.InputModel;
 using ProjetoJWT.WebAPI.Domain.Entities;
 using ProjetoJWT.WebAPI.ServiceResponse;
 
@@ -7,6 +7,7 @@ namespace ProjetoJWT.WebAPI.Application.interfaces
     public interface IUserService
     {
         Task AddUserAsync(User user);
-        Task<Response> Login(UserInputModel user);
+        Task<string> Login(LoginInputModel user);
+        Task<bool> UsuarioExistente(User user);
     }
 }

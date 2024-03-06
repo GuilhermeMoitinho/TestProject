@@ -1,4 +1,4 @@
-﻿using ProjetoJWT.WebAPI.Application.DTOs;
+﻿using ProjetoJWT.WebAPI.Application.DTOs.InputModel;
 using ProjetoJWT.WebAPI.Application.interfaces;
 using ProjetoJWT.WebAPI.Domain.Entities;
 using ProjetoJWT.WebAPI.Domain.interfaces;
@@ -20,9 +20,14 @@ namespace ProjetoJWT.WebAPI.Application.Services
             await _repository.AddUserAsync(user);
         }
 
-        public async Task<Response> Login(UserInputModel user)
+        public async Task<string> Login(LoginInputModel user)
         {
             return await _repository.Login(user);
+        }
+
+        public async Task<bool> UsuarioExistente(User user)
+        {
+            return await _repository.UsuarioExistente(user);
         }
     }
 }

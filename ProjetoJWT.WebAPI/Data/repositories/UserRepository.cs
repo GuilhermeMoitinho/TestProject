@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ProjetoJWT.WebAPI.Application.DTOs;
+using ProjetoJWT.WebAPI.Application.DTOs.InputModel;
 using ProjetoJWT.WebAPI.Application.interfaces;
 using ProjetoJWT.WebAPI.Data.db;
 using ProjetoJWT.WebAPI.Domain.Entities;
@@ -27,21 +27,26 @@ namespace ProjetoJWT.WebAPI.Data.repositories
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task<Response> Login(UserInputModel user)
+        public async Task<string> Login(LoginInputModel user)
         {
             var usuario = await _context.Users.FirstOrDefaultAsync
                     (op => op.Email == user.Email && op.Senha == user.Senha);
 
+            if (usuario is null) return string.Empty;
+
             var token = _token.GerarToken(usuario);
 
-            var response = new Response()
-            {
-                Mensagem = "Ok!",
-                Dados = token,
-                Sucesso = true
-            };
+            return token;
+        }
 
-            return response;
+        public async Task<bool> UsuarioExistente(User user)
+        {
+            var usuario = await _context.Users.FirstOrDefaultAsync
+                   (op => op.Email == user.Email && op.Senha == user.Senha);
+
+            if (usuario is null) return false;
+
+            return true;
         }
     }
 }

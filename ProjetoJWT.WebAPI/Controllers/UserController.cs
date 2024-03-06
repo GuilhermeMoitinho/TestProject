@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ProjetoJWT.WebAPI.Application.DTOs;
 using ProjetoJWT.WebAPI.Application.interfaces;
-using ProjetoJWT.WebAPI.Domain.Entities;
+using ProjetoJWT.WebAPI.Application.DTOs.ExtensionsInputModel;
+using ProjetoJWT.WebAPI.Application.DTOs.ExtensionsInputModel;
+using ProjetoJWT.WebAPI.ServiceResponse;
+using ProjetoJWT.WebAPI.Application.DTOs.InputModel;
 
 namespace ProjetoJWT.WebAPI.Controllers
 {
@@ -17,9 +19,13 @@ namespace ProjetoJWT.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser(User user)
+        public async Task<IActionResult> CreateUser(AuthInputModel inputModel)
         {
-            if (user == null) return BadRequest();  
+            var user =  inputModel.AuthTransformarEmEntity();
+
+            var usuarioExistente = await _userService.UsuarioExistente(user);
+
+            if (usuarioExistente == false) return BadRequest();
 
             await _userService.AddUserAsync(user);
 
@@ -27,11 +33,22 @@ namespace ProjetoJWT.WebAPI.Controllers
         }
 
         [HttpPost("login", Name = "login")]
-        public async Task<IActionResult> Login(UserInputModel user)
+        public async Task<IActionResult> Login(LoginInputModel inputModel)
         {
-            if(user == null) return NotFound();
+            var user = inputModel.TransformarEmUsusuario();
 
-            var response = await _userService.Login(user);
+            var usuarioExistente = await _userService.UsuarioExistente(user);
+
+            if(inputModel == null || usuarioExistente == false) return NotFound(); 
+
+            var token = await _userService.Login(inputModel);
+
+            var response = new Response()
+            {
+                Mensagem = "Tudo certo!",
+                Dados = token,
+                Sucesso = true
+            };
 
             return Ok(response);    
         }
