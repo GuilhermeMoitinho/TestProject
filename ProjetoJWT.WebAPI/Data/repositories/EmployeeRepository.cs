@@ -1,4 +1,5 @@
 ﻿using ProjetoJWT.WebAPI.Data.db;
+using ProjetoJWT.WebAPI.Data.repositories.contracts;
 using ProjetoJWT.WebAPI.Domain.Entities;
 using ProjetoJWT.WebAPI.Domain.interfaces;
 
